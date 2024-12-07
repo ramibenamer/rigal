@@ -1,0 +1,76 @@
+<div class="container">
+    <!-- Employees Section -->
+    <div class="section">
+      <h2>Employees</h2>
+      <ul>
+        <li *ngFor="let employee of employees; let i = index">
+          ID: {{ employee.id }}, Name: {{ employee.name }}, Email: {{ employee.email }}
+          <button (click)="deleteEntity('employee', i)">Delete</button>
+        </li>
+      </ul>
+      <form (submit)="addEmployee(); $event.preventDefault();">
+        <input [(ngModel)]="newEmployee.name" name="employeeName" placeholder="Name" required />
+        <input [(ngModel)]="newEmployee.email" name="employeeEmail" placeholder="Email" required />
+        <button type="submit">Add Employee</button>
+      </form>
+    </div>
+  
+    <!-- Professionals Section -->
+    <div class="section">
+      <h2>Professionals</h2>
+      <ul>
+        <li *ngFor="let professional of professionals; let i = index">
+          ID: {{ professional.id }}, Name: {{ professional.name }}, Email: {{ professional.email }}
+          <button (click)="deleteEntity('professional', i)">Delete</button>
+        </li>
+      </ul>
+      <form (submit)="addProfessional(); $event.preventDefault();">
+        <input [(ngModel)]="newProfessional.name" name="professionalName" placeholder="Name" required />
+        <input [(ngModel)]="newProfessional.email" name="professionalEmail" placeholder="Email" required />
+        <button type="submit">Add Professional</button>
+      </form>
+    </div>
+  
+    <!-- Disponibilités Section -->
+    <div class="section">
+      <h2>Disponibilités</h2>
+      <ul>
+        <li *ngFor="let disponibilite of disponibilites; let i = index">
+          Professional ID: {{ disponibilite.professionalId }}, Times: {{ disponibilite.times.join(', ') }}
+          <button (click)="deleteEntity('disponibilite', i)">Delete</button>
+        </li>
+      </ul>
+      <form (submit)="addDisponibilite(); $event.preventDefault();">
+        <input [(ngModel)]="newDisponibilite.professionalId" name="dispoProfessionalId" placeholder="Professional ID" required />
+        <input [(ngModel)]="newDisponibilite.times" name="dispoTimes" placeholder="Times (comma-separated)" required />
+        <button type="submit">Add Disponibilité</button>
+      </form>
+    </div>
+  
+    <!-- Rendezvous Section -->
+    <div class="section">
+      <h2>Rendezvous</h2>
+      <ul>
+        <li *ngFor="let rendezvous of rendezvous; let i = index">
+          Employee ID: {{ rendezvous.employeeId }}, Professional ID: {{ rendezvous.professionalId }},
+          Time: {{ rendezvous.time | date: 'short' }}, Status: {{ rendezvous.status }}
+          <div>
+            <button (click)="updateStatus(i, 'Confirmed')">Confirm</button>
+            <button (click)="updateStatus(i, 'Cancelled')">Cancel</button>
+            <button (click)="deleteEntity('rendezvous', i)">Delete</button>
+          </div>
+        </li>
+      </ul>
+      <form (submit)="addRendezvous(); $event.preventDefault();">
+        <input [(ngModel)]="newRendezvous.employeeId" name="rendezvousEmployeeId" placeholder="Employee ID" required />
+        <input [(ngModel)]="newRendezvous.professionalId" name="rendezvousProfessionalId" placeholder="Professional ID" required />
+        <input [(ngModel)]="newRendezvous.time" name="rendezvousTime" type="datetime-local" placeholder="Select Date & Time" required />
+        <select [(ngModel)]="newRendezvous.status" name="rendezvousStatus" required>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+        <button type="submit">Add Rendezvous</button>
+      </form>
+    </div>
+  </div>
